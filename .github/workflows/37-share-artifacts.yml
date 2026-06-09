@@ -45,5 +45,5 @@ jobs:
           path: dist/app.txt
       - name: List and Read Specific File
         run: |
-          ls -R single-file
-          cat single-file/app.txt
+          ls -R dist
+          cat dist/app.txt
