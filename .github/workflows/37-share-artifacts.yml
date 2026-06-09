@@ -42,8 +42,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: binary-dist
-          path: dist/app.txt
+          path: dist/app.txt  #just download the specific file instead of the whole directory
       - name: List and Read Specific File
         run: |
           ls -R dist
-          cat dist/app.txt
