@@ -1,0 +1,49 @@
+name: 37 - Share Artifacts Between Jobs
+# This workflow demonstrates sharing artifacts between different jobs.
+# Exam Tip: Jobs run on different runners, so artifacts are the primary way to move data between them.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Application
+        run: |
+          mkdir dist
+          echo "Binary v1.0" > dist/app.bin
+          echo "Build complete. Created dist/app.txt"
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-dist
+          path: dist/
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-dist
+          path: dist
+      - name: Run Tests on Binary
+        run: |
+          ls -R
+          echo "Testing app.bin..."
+
+  list-specific-file:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Specific File Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: binary-dist
+          path: dist/app.txt
+      - name: List and Read Specific File
+        run: |
+          ls -R single-file
+          cat single-file/app.txt

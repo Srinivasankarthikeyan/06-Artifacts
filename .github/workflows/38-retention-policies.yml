@@ -1,0 +1,22 @@
+name: 38 - Retention Policies
+# This workflow demonstrates retention policies for artifacts.
+# Exam Tip: Retention policies help manage storage costs by automatically deleting old artifacts.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  retention-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Temporary data" > temp.txt
+      - name: Upload with short retention
+        uses: actions/upload-artifact@v4
+        with:
+          name: short-lived-artifact
+          path: temp.txt
+          # Set retention to 1 day (minimum is 1)
+          retention-days: 1
+
+      # Note: You can also configure default retention at the repo, org, or enterprise level.
+      # Settings > Actions > General > Workflow retention

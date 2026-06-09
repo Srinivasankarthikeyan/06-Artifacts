@@ -1,0 +1,25 @@
+name: 35 - Upload Artifacts
+# This workflow shows how to upload files as artifacts.
+# Exam Tip: Artifacts allow you to persist data after a job has completed.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create a dummy file
+        run: echo "Hello, World!" > build-output.txt
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # Name of the artifact
+          name: my-artifact
+          # Path to the file or directory to upload
+          path: build-output.txt
+          # Optional: How long to keep the artifact (default 90 days)
+          retention-days: 5
